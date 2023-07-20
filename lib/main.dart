@@ -5,17 +5,16 @@ import 'package:m_mart_shopping/home%20page/home_page.dart';
 import 'package:m_mart_shopping/products/product_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<ProductProvider>(create:  (_)=>ProductProvider()),
-  ],
-  child: const MyApp()));
+    ChangeNotifierProvider<ProductProvider>(create: (_) => ProductProvider()),
+  ], child: const MyApp()));
 }
 
-Future<void> getData() async{
-   ProductProvider().getProducts();
+Future<void> getData() async {
+  ProductProvider().getProducts();
   // await source.getTheAllProducts;
 }
 
@@ -42,9 +41,7 @@ void navigateToScreens(int index) {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({
-    Key? key,x
-  }) : super(key: key);
+  const MyHomePage({Key? key, x}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -63,9 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text("MMart"),
         centerTitle: true,
-        actions: [
-          IconButton(onPressed:  (){}, icon:  const Icon(Icons.person))
-        ],
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.person))],
       ),
       body: IndexedStack(
         index: currentIndex,
