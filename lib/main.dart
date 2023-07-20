@@ -6,8 +6,7 @@ import 'package:m_mart_shopping/products/product_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async{
-//await getData();
-WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<ProductProvider>(create:  (_)=>ProductProvider()),
