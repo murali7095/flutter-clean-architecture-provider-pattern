@@ -1,21 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:m_mart_shopping/common%20widgets/bottom_nav_bar_widget.dart';
-// import 'package:m_mart_shopping/home%20page/home_page.dart';
-// import 'package:m_mart_shopping/products/product_provider.dart';
+import 'package:m_mart_shopping/common%20widgets/bottom_nav_bar_widget.dart';
+import 'package:m_mart_shopping/home%20page/home_page.dart';
+import 'package:m_mart_shopping/products/product_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
-    // ChangeNotifierProvider<ProductProvider>(create: (_) => ProductProvider()),
+    ChangeNotifierProvider<ProductProvider>(create: (_) => ProductProvider()),
   ], child: const MyApp()));
 }
 
 Future<void> getData() async {
-  //ProductProvider().getProducts();
+  ProductProvider().getProducts();
   // await source.getTheAllProducts;
 }
 
@@ -52,8 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var screens = [
-      // const HomePage(),
-      // const HomePage(),
+      const HomePage(),
+      const HomePage(),
     ];
 
     return Scaffold(
@@ -65,9 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: IndexedStack(
         index: currentIndex,
-        children: [],
+        children: screens,
       ),
-      //bottomNavigationBar: const BottomNavigationBarWidget(),
+      bottomNavigationBar: const BottomNavigationBarWidget(),
     );
   }
 }
