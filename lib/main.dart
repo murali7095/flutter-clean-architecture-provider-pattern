@@ -1,15 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:m_mart_shopping/auth/signIn/presentation/controller/sign_in_controller.dart';
 import 'package:m_mart_shopping/common%20widgets/bottom_nav_bar_widget.dart';
 import 'package:m_mart_shopping/home%20page/home_page.dart';
 import 'package:m_mart_shopping/products/product_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'auth/signIn/presentation/screens/sign_in_user_main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<ProductProvider>(create: (_) => ProductProvider()),
+    ChangeNotifierProvider<SignInController>(create: (_) => SignInController()),
   ], child: const MyApp()));
 }
 
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const SignInUserMain(),
     );
   }
 }
