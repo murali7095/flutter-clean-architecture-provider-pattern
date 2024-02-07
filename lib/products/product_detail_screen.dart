@@ -28,7 +28,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         title: Text("${widget.productName}"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(14.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,23 +37,46 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Container(
                 margin: const EdgeInsets.all(5),
                 height: 300,
-                width: 300,
+                width: double.infinity,
+                //color: Colors.grey,
                 child: Image(
                   image: NetworkImage('${widget.image}'),
                   fit: BoxFit.contain,
                 ),
               ),
             ),
-            ListTile(
-              title: const Text(
-                "Price:",
-                style: TextStyle(color: Colors.orange, fontSize: 25.0),
+            const Divider(),
+            const SizedBox(
+              height: 15.0,
+            ),
+            Text(
+              "${widget.productName}",
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
               ),
-              trailing: Text(widget.price.toString()),
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(
+              height: 15.0,
             ),
             Row(
               children: [
-                const Text('Description  '),
+                const Text(
+                  "'\$':",
+                  style: TextStyle(color: Colors.orange, fontSize: 25.0),
+                ),
+                Text(
+                  widget.price.toString(),
+                  style: const TextStyle(color: Colors.orange, fontSize: 25.0),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 15.0,
+            ),
+            Row(
+              children: [
                 Expanded(
                     child: Text(
                   widget.description.toString(),
@@ -61,14 +84,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 )),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconButton(
                     onPressed: () {}, icon: const Icon(Icons.favorite_border)),
                 ElevatedButton(
-                    onPressed: () {}, child: const Text('Add to cart'))
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.yellow)),
+                  child: const Text(
+                    'Add to cart',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                  child: const Text(
+                    'Buy',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ],
             ),
           ],
