@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 import 'auth/signIn/presentation/screens/sign_in_user_main.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<ProductProvider>(create: (_) => ProductProvider()),
     ChangeNotifierProvider<SignInController>(create: (_) => SignInController()),
