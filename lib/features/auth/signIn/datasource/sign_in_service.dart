@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:m_mart_shopping/auth/signIn/datasource/model/signIn_response_model.dart';
-import 'package:m_mart_shopping/auth/signIn/domain/sign_in_request_model.dart';
+import 'package:m_mart_shopping/core/constants/constants.dart';
+
 import 'dart:developer';
 
-import 'package:m_mart_shopping/constants/constants.dart';
+import 'package:m_mart_shopping/features/auth/signIn/datasource/model/signIn_response_model.dart';
+import 'package:m_mart_shopping/features/auth/signIn/domain/sign_in_request_model.dart';
 
 class SignInService {
   Future<http.Response?> signInUser(
@@ -19,8 +20,8 @@ class SignInService {
       };
       var jsonData = json.encode(payload);
       var apiKey = 'AIzaSyAmdttJwLoYd3udbpr-zh1wlGvU3UKe1CA';
-      response =
-          await http.post(Uri.parse(signBaseUrl + apiKey), body: jsonData);
+      response = await http.post(Uri.parse(BaseUrls.signBaseUrl + apiKey),
+          body: jsonData);
       debugPrint('Sign response ${response.body}');
       if (response.statusCode == 200) {
         var signInResponseModel =

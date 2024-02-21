@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:m_mart_shopping/products/product_model.dart';
+import 'package:m_mart_shopping/features/products/product_model.dart';
 
 class HomePageDataSource {
   Future<List<Product>?> getTheAllProducts() async {

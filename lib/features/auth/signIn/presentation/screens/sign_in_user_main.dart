@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:m_mart_shopping/auth/signIn/domain/sign_in_request_model.dart';
-import 'package:m_mart_shopping/auth/signIn/presentation/controller/sign_in_controller.dart';
-import 'package:m_mart_shopping/common%20widgets/custom_elevated_button.dart';
-import 'package:m_mart_shopping/common%20widgets/custom_text_form_field.dart';
-import 'package:m_mart_shopping/home%20page/home_page.dart';
+import 'package:m_mart_shopping/core/common%20widgets/custom_elevated_button.dart';
+import 'package:m_mart_shopping/core/common%20widgets/custom_text_form_field.dart';
+import 'package:m_mart_shopping/features/auth/signIn/domain/sign_in_request_model.dart';
+import 'package:m_mart_shopping/features/auth/signIn/presentation/controller/sign_in_controller.dart';
+import 'package:m_mart_shopping/features/auth/signUp/presentation/controller/sign_up_controller.dart';
+import 'package:m_mart_shopping/features/home%20page/home_page.dart';
 import 'package:provider/provider.dart';
 
 ///SignInUserMain widget responsible for allowing the user to enter their credentials and do validation
@@ -80,13 +81,13 @@ class _SignInUserMainState extends State<SignInUserMain> {
                           buildCustomTextFormFields(),
 
                           ///Sign in Button to submit the user inputs
-                          Consumer<SignInController>(
+                          Consumer<SignUpController>(
                               builder: (context, controller, _) {
                             return CustomElevatesButton(
                               onPressed: () {
                                 onSubmit();
                               },
-                              child: const Text("Sign In"),
+                              child: const Text("Sign Up"),
                             );
                           }),
                         ],

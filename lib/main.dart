@@ -1,19 +1,32 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:m_mart_shopping/auth/signIn/presentation/controller/sign_in_controller.dart';
-import 'package:m_mart_shopping/common%20widgets/bottom_nav_bar_widget.dart';
-import 'package:m_mart_shopping/home%20page/home_page.dart';
-import 'package:m_mart_shopping/products/product_provider.dart';
+import 'package:m_mart_shopping/core/common%20widgets/bottom_nav_bar_widget.dart';
+
+import 'package:m_mart_shopping/features/auth/signIn/presentation/controller/sign_in_controller.dart';
+import 'package:m_mart_shopping/features/auth/signIn/presentation/screens/sign_in_user_main.dart';
+import 'package:m_mart_shopping/features/auth/signUp/business/usecases/sign_up_usecase.dart';
+import 'package:m_mart_shopping/features/auth/signUp/data/model/sign_up_model.dart';
+import 'package:m_mart_shopping/features/auth/signUp/data/repositories/sign_up_repo_impl.dart';
+import 'package:m_mart_shopping/features/auth/signUp/presentation/controller/sign_up_controller.dart';
+import 'package:m_mart_shopping/features/auth/signUp/presentation/screens/sign_up_user_main.dart';
+import 'package:m_mart_shopping/features/home%20page/home_page.dart';
+import 'package:m_mart_shopping/features/products/product_provider.dart';
+
 import 'package:provider/provider.dart';
 
-import 'auth/signIn/presentation/screens/sign_in_user_main.dart';
-
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  // //final res =await SignUpUser(SignUpRepositoryImplementation()).registerTheUser(signUpModel: SignUpModel(email: "reddy162@gmail.com", password: "murali12354", returnSecureToken: true));
+  // debugPrint("the isLeft() : ${res.isLeft().toString()}");
+  // debugPrint("the isRight() : ${res.isRight()}");
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<ProductProvider>(create: (_) => ProductProvider()),
     ChangeNotifierProvider<SignInController>(create: (_) => SignInController()),
+    ChangeNotifierProvider<SignUpController>(create: (_) => SignUpController()),
   ], child: const MyApp()));
 }
 
@@ -33,7 +46,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SignInUserMain(),
+      home: const SignUpUserMain(),
     );
   }
 }
@@ -73,4 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: const BottomNavigationBarWidget(),
     );
   }
+}
+
+void getSTream() {
+  StreamController<double> controller = StreamController<double>();
 }
