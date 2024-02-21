@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:m_mart_shopping/home%20page/data%20source/home_page_data_source.dart';
-import 'package:m_mart_shopping/products/product_model.dart';
+import 'package:m_mart_shopping/features/home%20page/data%20source/home_page_data_source.dart';
+import 'package:m_mart_shopping/features/products/product_model.dart';
 
 class ProductProvider extends ChangeNotifier {
   var source = HomePageDataSource();

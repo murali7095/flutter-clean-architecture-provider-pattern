@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:m_mart_shopping/auth/signIn/datasource/sign_in_service.dart';
-import 'package:m_mart_shopping/auth/signIn/domain/sign_in_request_model.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:m_mart_shopping/features/auth/signIn/datasource/sign_in_service.dart';
+import 'package:m_mart_shopping/features/auth/signIn/domain/sign_in_request_model.dart';
 
 class SignInController with ChangeNotifier {
   String errorMessage = '';
