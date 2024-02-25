@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:m_mart_shopping/core/common%20widgets/bottom_nav_bar_widget.dart';
+import 'package:m_mart_shopping/core/common%20widgets/splash%20screens/welcome_screen.dart';
 
 import 'package:m_mart_shopping/features/auth/signIn/presentation/controller/sign_in_controller.dart';
 import 'package:m_mart_shopping/features/auth/signIn/presentation/screens/sign_in_user_main.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SignUpUserMain(),
+      home: const WelcomeScreen(),
     );
   }
 }

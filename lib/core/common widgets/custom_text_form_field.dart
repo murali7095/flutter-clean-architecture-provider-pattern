@@ -9,7 +9,7 @@ class CustomTextFormField extends StatefulWidget {
       this.obscureText = false,
       this.autoFocus,
       required this.focusNode,
-      this.errorText = '',
+      this.errorText,
       required this.onChanged,
       required this.onEditingComplete,
       this.controller,
@@ -21,7 +21,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool obscureText;
   final bool? autoFocus;
   final FocusNode focusNode;
-  final String errorText;
+  final String? errorText;
   final Function(String) onChanged;
   final Function() onEditingComplete;
   final TextEditingController? controller;
@@ -68,11 +68,22 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         decoration: InputDecoration(
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(color: Colors.green),
             ),
             contentPadding: const EdgeInsets.only(top: 20),
             hintText: widget.hintText,
             labelText: widget.labelText,
+            enabledBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderSide: BorderSide(color: Colors.blue),
+            ),
+            // errorBorder:   const OutlineInputBorder(
+            //   borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            //   borderSide: BorderSide(color: Colors.red),
+            // ),
+            disabledBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderSide: BorderSide(color: Colors.green),
+            ),
             prefixIcon: Padding(
               padding: const EdgeInsets.only(top: 3),
               child: Icon(widget.iconData),
