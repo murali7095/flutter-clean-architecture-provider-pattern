@@ -9,6 +9,8 @@ import 'package:m_mart_shopping/features/auth/signUp/presentation/controller/sig
 import 'package:m_mart_shopping/features/home%20page/home_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../core/utils.dart';
+
 ///SignUpUserMain widget is responsible for allowing the user to enter details and do validations
 ///The User will be navigated to home screen after the successful registration
 class SignUpUserMain extends StatefulWidget {

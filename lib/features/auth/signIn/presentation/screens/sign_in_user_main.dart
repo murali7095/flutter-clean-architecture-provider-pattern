@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_mart_shopping/core/common%20widgets/custom_elevated_button.dart';
 import 'package:m_mart_shopping/core/common%20widgets/custom_text_form_field.dart';
+import 'package:m_mart_shopping/core/utils.dart';
 import 'package:m_mart_shopping/features/auth/signIn/domain/sign_in_request_model.dart';
 import 'package:m_mart_shopping/features/auth/signIn/presentation/controller/sign_in_controller.dart';
 import 'package:m_mart_shopping/features/auth/signUp/presentation/controller/sign_up_controller.dart';
@@ -213,50 +214,3 @@ Flexible buildSignInTextWidget() {
   );
 }
 
-String? validateEmail(String value) {
-  if (value.isEmpty) {
-    return 'Please enter email';
-  } else {
-    if (!value.contains('@')) {
-      return 'Enter valid email';
-    } else {
-      return null;
-    }
-  }
-}
-
-String? validatePassword(String value) {
-  if (value.isEmpty) {
-    return 'Please enter Password';
-  } else {
-    if (value.length < 5) {
-      return 'Enter at least 5 chars';
-    } else {
-      return null;
-    }
-  }
-}
-
-String? validateUsername(String value) {
-  if (value.isEmpty) {
-    return 'Please enter username';
-  } else {
-    if (value.length < 5) {
-      return 'Enter at least 3 chars';
-    } else {
-      return null;
-    }
-  }
-}
-
-String? validatePhoneNumber(String value) {
-  if (value.isEmpty) {
-    return 'Please enter phone number';
-  } else {
-    if (value.length != 10) {
-      return 'Enter 10 digit mobile number';
-    } else {
-      return null;
-    }
-  }
-}
