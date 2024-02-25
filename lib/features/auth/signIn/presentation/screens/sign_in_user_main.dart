@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_mart_shopping/core/common%20widgets/custom_elevated_button.dart';
 import 'package:m_mart_shopping/core/utils.dart';
-import 'package:m_mart_shopping/features/auth/signIn/domain/sign_in_request_model.dart';
 import 'package:m_mart_shopping/features/auth/signIn/presentation/controller/sign_in_controller.dart';
 import 'package:m_mart_shopping/features/auth/signUp/presentation/controller/sign_up_controller.dart';
 import 'package:m_mart_shopping/features/home%20page/home_page.dart';
@@ -20,7 +19,6 @@ class SignInUserMain extends StatefulWidget {
 }
 
 class _SignInUserMainState extends State<SignInUserMain> {
-  var signInRequestModel = SignInRequestModel();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var signInModel = SignInModel();
