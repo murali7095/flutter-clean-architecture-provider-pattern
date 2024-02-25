@@ -12,6 +12,7 @@ class CustomElevatesButton extends StatelessWidget {
       width: 250,
       height: 50,
       decoration: const BoxDecoration(
+        color: Colors.redAccent,
         borderRadius: BorderRadius.all(
           Radius.circular(40.0),
         ),
