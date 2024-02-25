@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:m_mart_shopping/core/common%20widgets/custom_elevated_button.dart';
-import 'package:m_mart_shopping/core/common%20widgets/custom_text_form_field.dart';
 import 'package:m_mart_shopping/core/utils.dart';
 import 'package:m_mart_shopping/features/auth/signIn/domain/sign_in_request_model.dart';
 import 'package:m_mart_shopping/features/auth/signIn/presentation/controller/sign_in_controller.dart';
 import 'package:m_mart_shopping/features/auth/signUp/presentation/controller/sign_up_controller.dart';
 import 'package:m_mart_shopping/features/home%20page/home_page.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../../core/common widgets/text_form_field_custom_widget.dart';
+import '../../data/model/sign_in_model.dart';
 
 ///SignInUserMain widget responsible for allowing the user to enter their credentials and do validation
 ///The User will be navigated to home screen with correct credentials
@@ -21,6 +23,8 @@ class _SignInUserMainState extends State<SignInUserMain> {
   var signInRequestModel = SignInRequestModel();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  var signInModel = SignInModel();
+
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
 
@@ -68,33 +72,34 @@ class _SignInUserMainState extends State<SignInUserMain> {
                 FocusScope.of(context).unfocus();
               },
               child: Scaffold(
-                body: Stack(
-                  children: [
-                    gradientContainer(),
-                    SizedBox(
-                      height: size.height,
-                      width: size.width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          buildSignInTextWidget(),
-                          buildCustomTextFormFields(),
+                body: SingleChildScrollView(
+                  child: Container(
+                    height: size.height,
+                    width: size.width,
+                    padding: const EdgeInsets.only(left: 20, top: 150),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        buildSignInTextWidget(),
 
-                          ///Sign in Button to submit the user inputs
-                          Consumer<SignUpController>(
-                              builder: (context, controller, _) {
-                            return CustomElevatesButton(
-                              onPressed: () {
-                                onSubmit();
-                              },
-                              child: const Text("Sign Up"),
-                            );
-                          }),
-                        ],
-                      ),
-                    )
-                  ],
+                        buildCustomTextFormFields(),
+                        const SizedBox(
+                          height: 25,
+                        ),
+
+                        ///Sign in Button to submit the user inputs
+                        Consumer<SignUpController>(
+                            builder: (context, controller, _) {
+                          return CustomElevatesButton(
+                            onPressed: () {
+                              onSubmit();
+                            },
+                            child: const Text("Log in"),
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             );
@@ -103,85 +108,67 @@ class _SignInUserMainState extends State<SignInUserMain> {
 
   ///onSubmit to do validation
   void onSubmit() async {
+    debugPrint("emailErrorMessage : $emailErrorMessage");
+    debugPrint("passwordErrorMessage : $passwordErrorMessage");
     if (_formKey.currentState!.validate()) {
-      if (emailErrorMessage == '' && passwordErrorMessage == '') {
+      if (emailErrorMessage == null && passwordErrorMessage == null) {
         var provider = Provider.of<SignInController>(context, listen: false);
-        await provider.signInUserController(signInRequestModel, context);
+        await provider.signInUserController(signInModel, context);
         debugPrint('entered inside second if');
         if (provider.isBack) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const HomePage()));
         }
       }
     }
   }
 
   ///crates text widgets to the user to enter their inputs
-  Container buildCustomTextFormFields() {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      child: Card(
-        elevation: 5.0,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  CustomTextFormField(
-                    focusNode: _emailFocusNode,
-                    autoFocus: true,
-                    controller: emailController,
-                    errorText: emailErrorMessage ?? '',
-                    onChanged: (value) {
-                      signInRequestModel.email = value;
-                      emailController.text = value;
-                      debugPrint(
-                          ' signInRequestModel.email : ${signInRequestModel.email}');
-                    },
-                    validate: (value) {
-                      setState(() {
-                        emailErrorMessage = validateEmail(value) ?? '';
-                      });
-                    },
-                    onEditingComplete: () {
-                      FocusScope.of(context).requestFocus(_passwordFocusNode);
-                    },
-                    hintText: 'email',
-                    labelText: 'email',
-                    iconData: Icons.email,
-                  ),
-                  CustomTextFormField(
-                    focusNode: _passwordFocusNode,
-                    autoFocus: false,
-                    errorText: passwordErrorMessage ?? '',
-                    controller: passwordController,
-                    onChanged: (value) {
-                      signInRequestModel.password = value;
-                      passwordController.text = value;
-                      debugPrint(
-                          ' signInRequestModel.password : ${signInRequestModel.password}');
-                    },
-                    validate: (value) {
-                      setState(() {
-                        passwordErrorMessage = validatePassword(value) ?? '';
-                        debugPrint(
-                            ' passwordErrorMessage : $passwordErrorMessage');
-                      });
-                    },
-                    onEditingComplete: () {
-                      FocusScope.of(context).unfocus();
-                    },
-                    hintText: 'password',
-                    labelText: 'password',
-                    iconData: Icons.lock_open_rounded,
-                  ),
-                ],
-              ),
+  Padding buildCustomTextFormFields() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 80, right: 20),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextFormFieldCustomWidget(
+              hintText: 'Email',
+              focusNode: _emailFocusNode,
+              onChanged: (value) {
+                signInModel.email = value;
+                emailController.text = value;
+                debugPrint(' signInRequestModel.email : ${signInModel.email}');
+              },
+              validate: (value) {
+                setState(() {
+                  emailErrorMessage = validateEmail(value);
+                });
+              },
+              onEditingComplete: () {
+                FocusScope.of(context).requestFocus(_passwordFocusNode);
+              },
+              errorText: emailErrorMessage,
             ),
-          ),
+            TextFormFieldCustomWidget(
+              hintText: 'Password',
+              focusNode: _passwordFocusNode,
+              onChanged: (value) {
+                signInModel.password = value;
+                passwordController.text = value;
+                debugPrint(
+                    ' signInRequestModel.email : ${signInModel.password}');
+              },
+              validate: (value) {
+                setState(() {
+                  passwordErrorMessage = validatePassword(value);
+                });
+              },
+              onEditingComplete: () {
+                FocusScope.of(context).unfocus();
+              },
+              errorText: passwordErrorMessage,
+            ),
+          ],
         ),
       ),
     );
@@ -201,16 +188,16 @@ Container gradientContainer() {
 }
 
 ///Sign in text widget
-Flexible buildSignInTextWidget() {
-  return Flexible(
-    child: Container(
-      margin: const EdgeInsets.all(20.0),
-      padding: const EdgeInsets.all(8.0),
-      child: const Text(
-        'Sign in',
-        style: TextStyle(fontSize: 30.0),
+Align buildSignInTextWidget() {
+  return const Align(
+    alignment: Alignment.topLeft,
+    child: SizedBox(
+      height: 96,
+      width: 163,
+      child: Text(
+        'log into\nyour account',
+        style: TextStyle(fontSize: 25.0),
       ),
     ),
   );
 }
-
