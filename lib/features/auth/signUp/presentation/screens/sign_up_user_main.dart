@@ -9,6 +9,8 @@ import 'package:m_mart_shopping/features/auth/signUp/presentation/controller/sig
 import 'package:m_mart_shopping/features/home%20page/home_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../core/utils.dart';
+
 ///SignUpUserMain widget is responsible for allowing the user to enter details and do validations
 ///The User will be navigated to home screen after the successful registration
 class SignUpUserMain extends StatefulWidget {
@@ -87,8 +89,7 @@ class _SignUpUserMainState extends State<SignUpUserMain> {
                     height: size.height,
                     width: size.width,
                     child: Column(
-                      //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         buildSignInTextWidget(),
                         buildCustomTextFormFields(),
@@ -214,54 +215,6 @@ class _SignUpUserMainState extends State<SignUpUserMain> {
               },
               errorText: phoneNumberErrorMessage,
             ),
-            /*CustomTextFormField(
-              focusNode: _emailFocusNode,
-              autoFocus: false,
-              controller: emailController,
-              errorText: emailErrorMessage ?? '',
-              onChanged: (value) {
-                signUpModel.email = value;
-                emailController.text = value;
-                debugPrint(
-                    ' signInRequestModel.email : ${signUpModel.email}');
-              },
-              validate: (value) {
-                setState(() {
-                  emailErrorMessage = validateEmail(value) ?? '';
-                });
-              },
-              onEditingComplete: () {
-                FocusScope.of(context).requestFocus(_passwordFocusNode);
-              },
-              hintText: 'email',
-              labelText: 'email',
-              iconData: Icons.email,
-            ),
-            CustomTextFormField(
-              focusNode: _passwordFocusNode,
-              autoFocus: false,
-              errorText: passwordErrorMessage ?? '',
-              controller: passwordController,
-              onChanged: (value) {
-                signUpModel.password = value;
-                passwordController.text = value;
-                debugPrint(
-                    ' signInRequestModel.password : ${signUpModel.password}');
-              },
-              validate: (value) {
-                setState(() {
-                  passwordErrorMessage = validatePassword(value) ?? '';
-                  debugPrint(
-                      ' passwordErrorMessage : $passwordErrorMessage');
-                });
-              },
-              onEditingComplete: () {
-                FocusScope.of(context).unfocus();
-              },
-              hintText: 'password',
-              labelText: 'password',
-              iconData: Icons.lock_open_rounded,
-            ),*/
           ],
         ),
       ),
@@ -281,7 +234,7 @@ Container gradientContainer() {
   );
 }
 
-///Sign in text widget
+///Sign up text widget
 Align buildSignInTextWidget() {
   return const Align(
     alignment: Alignment.topLeft,

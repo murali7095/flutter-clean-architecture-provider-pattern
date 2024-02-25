@@ -2,34 +2,33 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:m_mart_shopping/features/auth/signIn/datasource/sign_in_service.dart';
-import 'package:m_mart_shopping/features/auth/signIn/domain/sign_in_request_model.dart';
+import '../../business/usecases/sign_in_usecase.dart';
+import '../../data/model/sign_in_model.dart';
+import '../../data/repositories/sign_in_repo_impl.dart';
 
 class SignInController with ChangeNotifier {
   String errorMessage = '';
   bool isLoading = false;
   bool isBack = false;
-  final SignInService signInService = SignInService();
 
   Future<void> signInUserController(
-      SignInRequestModel signInRequestModel, BuildContext contextMain) async {
+      SignInModel signInModel, BuildContext contextMain) async {
     isLoading = true;
     notifyListeners();
-    http.Response response =
-        (await signInService.signInUser(signInRequestModel))!;
-    if (response.statusCode == 200) {
-      isBack = true;
-    } else if (response.statusCode == 400) {
-      var errorResponse = jsonDecode(response.body);
+    final data = await SignInUser(SignInRepositoryImplementation())
+        .loginTheUser(signInModel: signInModel);
+    data.fold((l) {
+      var errorResponse = jsonDecode(l.displayErrorMessage);
       String error = errorResponse['error']['message'];
       if (error.contains('EMAIL_NOT_FOUND')) {
-        errorMessage = 'Email not found, please try with correct Email address';
+        errorMessage = 'Please enter correct email';
       } else if (error.contains('INVALID_PASSWORD')) {
-        errorMessage = 'Invalid password, please try with correct password';
+        errorMessage = 'Please enter correct password';
       }
       _showErrorDialog(errorMessage, contextMain);
-    }
+    }, (r) {
+      debugPrint('final data : ${r.idToken}');
+    });
     isLoading = false;
     notifyListeners();
   }
