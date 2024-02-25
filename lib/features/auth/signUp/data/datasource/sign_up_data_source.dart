@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:m_mart_shopping/core/api%20services/network/network_api_services.dart';
@@ -30,13 +32,22 @@ class SignUpDataSourceImpl implements SignUpDataSource {
           .postApiResponse(BaseUrls.signUpBaseUrl, payload);
       debugPrint("response body: ${response.body}");
       var result = responseHandler(response);
+      /* var auth= FirebaseAuth.instance;
+      final userId=  auth.currentUser!.uid;
+      DatabaseReference ref = FirebaseDatabase.instance.ref("users/$userId");
+      await ref.set({
+        "name": signUpModel.username,
+        "id": userId,
+        "phone": signUpModel.phoneNumber
+      });*/
       return result.fold((l) {
         debugPrint("left reached ${jsonDecode(response.body)}");
         return Left(CustomException(
           displayErrorMessage: response.body,
         ));
-      }, (r) {
+      }, (r) async {
         debugPrint("right reached");
+
         return Right(r);
       });
     } catch (e) {
@@ -44,4 +55,12 @@ class SignUpDataSourceImpl implements SignUpDataSource {
       rethrow;
     }
   }
+}
+
+Future<void> saveUserData({required String url, var payload}) async {
+  var auth = FirebaseAuth.instance;
+  final userId = auth.currentUser!.uid;
+  final data = await NetworkApiServices().postApiResponse(
+      "https://shop-app-36d2c-default-rtdb.firebaseio.com/userInfo", payload);
+  debugPrint("the user data: ${data.body}");
 }
