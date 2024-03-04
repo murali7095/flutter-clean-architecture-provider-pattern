@@ -18,8 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           SizedBox(
             height: size.height,
             width: size.width,
-            child: Image.network(
-                "https://images.smiletemplates.com/uploads/screenshots/320/0000320055/powerpoint-template-450w.jpg",
+            child: Image.asset("assets/images/shopping.png",
                 fit: BoxFit.fitHeight),
           ),
           const GreetingWidget(),
@@ -44,19 +43,19 @@ class _GreetingWidgetState extends State<GreetingWidget> {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 400),
+        padding: const EdgeInsets.only(top: 50),
         child: Column(
           children: [
             const Text(
-              "Welcome to MMart",
-              style: TextStyle(color: Colors.redAccent, fontSize: 28),
+              "𝑾𝒆𝒍𝒄𝒐𝒎𝒆 𝒕𝒐 𝑴𝑴𝒂𝒓𝒕",
+              style: TextStyle(color: Colors.black87, fontSize: 28),
             ),
             const Text(
-              "The Biggest online shopping world",
-              style: TextStyle(color: Colors.blue, fontSize: 20),
+              "𝑺𝒉𝒐𝒑 𝑯𝒆𝒓𝒆",
+              style: TextStyle(color: Colors.red, fontSize: 20),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 80),
+              padding: const EdgeInsets.only(top: 490),
               child: SizedBox(
                   height: 40,
                   width: 200,
@@ -65,7 +64,7 @@ class _GreetingWidgetState extends State<GreetingWidget> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SignUpUserMain(),
+                              builder: (context) => const SignUpUserMain(),
                             ));
                       },
                       child: const Text("Get Started"))),

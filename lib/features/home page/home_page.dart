@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     ElevatedButton(
                       onPressed: () {},
-                      child: Icon(
+                      child: const Icon(
                         Icons.shop_rounded,
                         size: 50,
                       ),

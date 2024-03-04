@@ -20,7 +20,8 @@ class SignUpUserMain extends StatefulWidget {
   State<SignUpUserMain> createState() => _SignUpUserMainState();
 }
 
-class _SignUpUserMainState extends State<SignUpUserMain> {
+class _SignUpUserMainState extends State<SignUpUserMain>
+    with SingleTickerProviderStateMixin {
   var signUpModel = SignUpModel();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -28,8 +29,13 @@ class _SignUpUserMainState extends State<SignUpUserMain> {
   TextEditingController userNameController = TextEditingController();
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
-  final _usernameFocusNode = FocusNode();
+
+  //final _usernameFocusNode = FocusNode();
   final _phoneNumberFocusNode = FocusNode();
+  late AnimationController controller;
+  late Animation<double> headingFadeAnimation;
+  late Animation<double> scaleAnimation;
+  late Animation<Offset> slideAnimation;
 
   _focusListener() {
     setState(() {});
@@ -37,11 +43,31 @@ class _SignUpUserMainState extends State<SignUpUserMain> {
 
   @override
   void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    headingFadeAnimation = Tween<double>(begin: 0, end: 1).animate(controller);
+
+    slideAnimation = Tween(
+      begin: const Offset(-1, -1),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.ease,
+      ),
+    );
+
+    scaleAnimation = Tween<double>(begin: 0, end: 1).animate(controller);
+
+    controller.forward();
     _emailFocusNode.addListener(_focusListener);
     _passwordFocusNode.addListener(_focusListener);
     _phoneNumberFocusNode.addListener(_focusListener);
-    _usernameFocusNode.addListener(_focusListener);
-    super.initState();
+    //_usernameFocusNode.addListener(_focusListener);
   }
 
   @override
@@ -49,7 +75,7 @@ class _SignUpUserMainState extends State<SignUpUserMain> {
     _emailFocusNode.removeListener(_focusListener);
     _passwordFocusNode.removeListener(_focusListener);
     _phoneNumberFocusNode.removeListener(_focusListener);
-    _usernameFocusNode.removeListener(_focusListener);
+    //_usernameFocusNode.removeListener(_focusListener);
     passwordController.dispose();
     emailController.dispose();
     phoneNumberController.dispose();
@@ -84,31 +110,54 @@ class _SignUpUserMainState extends State<SignUpUserMain> {
               },
               child: Scaffold(
                 body: SingleChildScrollView(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 20, top: 100),
-                    height: size.height,
-                    width: size.width,
-                    child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        buildSignInTextWidget(),
-                        buildCustomTextFormFields(),
-                        const SizedBox(
-                          height: 25,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: size.height,
+                        width: size.width,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Colors.red[600]!.withOpacity(0.5),
+                            Colors.blue.withOpacity(0.5),
+                          ]),
                         ),
-
-                        ///Sign up Button to submit the user inputs
-                        Consumer<SignUpController>(
-                            builder: (context, controller, _) {
-                          return CustomElevatesButton(
-                            onPressed: () {
-                              onSubmit();
-                            },
-                            child: const Text("Sign Up"),
-                          );
-                        }),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 20, top: 80),
+                        height: size.height,
+                        width: size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            FadeTransition(
+                                opacity: headingFadeAnimation,
+                                child: buildSignInTextWidget()),
+                            textFieldsWithButtonWidget(),
+                            FadeTransition(
+                                opacity: headingFadeAnimation,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text("Already have an account?"),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const SignInUserMain()));
+                                        },
+                                        child: Text(
+                                          "Login",
+                                          style: TextStyle(
+                                              color: Colors.blue.shade800),
+                                        ))
+                                  ],
+                                ))
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -136,17 +185,43 @@ class _SignUpUserMainState extends State<SignUpUserMain> {
     }
   }
 
+  textFieldsWithButtonWidget() {
+    return SlideTransition(
+      position: slideAnimation,
+      child: ScaleTransition(
+        scale: scaleAnimation,
+        child: Column(
+          children: [
+            buildCustomTextFormFields(),
+            const SizedBox(
+              height: 30,
+            ),
+
+            ///Sign up Button to submit the user inputs
+            Consumer<SignUpController>(builder: (context, controller, _) {
+              return CustomElevatesButton(
+                onPressed: () {
+                  onSubmit();
+                },
+                child: const Text("Sign Up"),
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
   ///crates text widgets to the user to enter their inputs
   Padding buildCustomTextFormFields() {
     return Padding(
-      padding: const EdgeInsets.only(top: 50, right: 20),
+      padding: const EdgeInsets.only(top: 35, right: 20),
       child: Form(
         key: _formKey,
         child: Column(
           children: [
             TextFormFieldCustomWidget(
-              hintText: 'username',
-              focusNode: _usernameFocusNode,
+              hintText: 'Username',
               onChanged: (value) {
                 signUpModel.username = value;
                 userNameController.text = value;
@@ -194,7 +269,7 @@ class _SignUpUserMainState extends State<SignUpUserMain> {
                 });
               },
               onEditingComplete: () {
-                FocusScope.of(context).requestFocus(_passwordFocusNode);
+                FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
               },
               errorText: passwordErrorMessage,
             ),
@@ -242,7 +317,7 @@ Align buildSignInTextWidget() {
       height: 96,
       width: 163,
       child: Text(
-        'Create\nyour account',
+        '𝘾𝙧𝙚𝙖𝙩𝙚\n𝙮𝙤𝙪𝙧 𝙖𝙘𝙘𝙤𝙪𝙣𝙩',
         style: TextStyle(fontSize: 25.0),
       ),
     ),

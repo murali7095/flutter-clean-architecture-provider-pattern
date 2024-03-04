@@ -7,7 +7,7 @@ class TextFormFieldCustomWidget extends StatefulWidget {
       this.labelText,
       this.obscureText = false,
       this.autoFocus = false,
-      required this.focusNode,
+      this.focusNode,
       this.errorText,
       required this.onChanged,
       required this.onEditingComplete,
@@ -18,7 +18,7 @@ class TextFormFieldCustomWidget extends StatefulWidget {
   final String? labelText;
   final bool obscureText;
   final bool autoFocus;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final String? errorText;
   final Function(String) onChanged;
   final Function() onEditingComplete;
@@ -34,10 +34,12 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, bottom: 5),
+      padding: const EdgeInsets.only(
+        top: 5,
+      ),
       child: TextFormField(
         textDirection: TextDirection.ltr,
-        autofocus: true,
+        autofocus: widget.autoFocus,
         focusNode: widget.focusNode,
         obscureText: widget.obscureText,
         onEditingComplete: widget.onEditingComplete,

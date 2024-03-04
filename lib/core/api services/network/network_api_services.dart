@@ -11,47 +11,21 @@ import 'package:m_mart_shopping/core/custom_exception.dart';
 
 class NetworkApiServices extends BaseApiServices {
   @override
-  Future getApiResponse(String url) async {
-    dynamic jsonResponseData;
+  Future<http.Response> getApiResponse(String url) async {
+    final http.Response getApiResponseData;
     try {
-      final response =
-          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
-      jsonResponseData = jsonResponse(response);
-    } on SocketException {
-      throw InternetException("No Internet, Please try again");
+      getApiResponseData = await http.get(
+        Uri.parse(
+          url,
+        ),
+      );
+      debugPrint("NetworkApiServices success");
+      return getApiResponseData;
+    } catch (e) {
+      debugPrint("NetworkApiServices Exception occurred");
+      rethrow;
     }
-    return jsonResponseData;
   }
-
-/*  @override
-  Future<Either<CustomException, dynamic>> getApiResponse(String url) async{
-    dynamic jsonResponseData;
-   try{
-     final response =
-         await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
-     if(response)
-     jsonResponseData = jsonResponse(response);
-
-   }catch(e){
-     log(e.toString());
-   }
-  }*/
-/*
-  @override
-  Future postApiResponse(String url, data) async {
-    dynamic jsonResponseData;
-    try {
-      final response = await http.post(
-          Uri.parse(
-            url,
-          ),
-          body: data);
-      jsonResponseData = jsonResponse(response);
-    } on SocketException {
-      throw InternetException("No Internet, Please try again");
-    }
-    return jsonResponseData;
-  }*/
 
   @override
   Future<http.Response> postApiResponse(String url, data) async {

@@ -32,14 +32,6 @@ class SignUpDataSourceImpl implements SignUpDataSource {
           .postApiResponse(BaseUrls.signUpBaseUrl, payload);
       debugPrint("response body: ${response.body}");
       var result = responseHandler(response);
-      /* var auth= FirebaseAuth.instance;
-      final userId=  auth.currentUser!.uid;
-      DatabaseReference ref = FirebaseDatabase.instance.ref("users/$userId");
-      await ref.set({
-        "name": signUpModel.username,
-        "id": userId,
-        "phone": signUpModel.phoneNumber
-      });*/
       return result.fold((l) {
         debugPrint("left reached ${jsonDecode(response.body)}");
         return Left(CustomException(
