@@ -27,32 +27,20 @@ class SignUpDataSourceImpl implements SignUpDataSource {
         "returnSecureToken": signUpModel.returnSecureToken
       };
       final payload = json.encode(data);
-      debugPrint("signUpModel.email: ${signUpModel.email}");
+
       final response = await NetworkApiServices()
           .postApiResponse(BaseUrls.signUpBaseUrl, payload);
-      debugPrint("response body: ${response.body}");
+
       var result = responseHandler(response);
       return result.fold((l) {
-        debugPrint("left reached ${jsonDecode(response.body)}");
         return Left(CustomException(
           displayErrorMessage: response.body,
         ));
       }, (r) async {
-        debugPrint("right reached");
-
         return Right(r);
       });
     } catch (e) {
-      debugPrint("cache reached");
       rethrow;
     }
   }
-}
-
-Future<void> saveUserData({required String url, var payload}) async {
-  var auth = FirebaseAuth.instance;
-  final userId = auth.currentUser!.uid;
-  final data = await NetworkApiServices().postApiResponse(
-      "https://shop-app-36d2c-default-rtdb.firebaseio.com/userInfo", payload);
-  debugPrint("the user data: ${data.body}");
 }

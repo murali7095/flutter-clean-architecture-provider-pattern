@@ -19,10 +19,9 @@ class NetworkApiServices extends BaseApiServices {
           url,
         ),
       );
-      debugPrint("NetworkApiServices success");
+
       return getApiResponseData;
     } catch (e) {
-      debugPrint("NetworkApiServices Exception occurred");
       rethrow;
     }
   }
@@ -36,11 +35,9 @@ class NetworkApiServices extends BaseApiServices {
             url,
           ),
           body: data);
-      debugPrint("success");
 
       return postApiResponseData;
     } catch (e) {
-      debugPrint("Exception occurred");
       rethrow;
     }
   }

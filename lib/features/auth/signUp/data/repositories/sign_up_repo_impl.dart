@@ -18,10 +18,9 @@ class SignUpRepositoryImplementation implements SignUpRepository {
         await NetworkInfoImpl(DataConnectionChecker()).isConnected;
     try {
       if (hasInternetConnection) {
-        debugPrint("the isConnected: $hasInternetConnection");
         final response = await SignUpDataSourceImpl()
             .registerTheUser(signUpModel: signUpModel);
-        debugPrint("the SignUpDataSourceImpl: $response");
+
         return response.fold((l) {
           return Left(
               CustomException(displayErrorMessage: l.displayErrorMessage));
@@ -33,7 +32,6 @@ class SignUpRepositoryImplementation implements SignUpRepository {
         return Left(NoInternetException(displayErrorMessage: 'No Internet'));
       }
     } catch (e) {
-      debugPrint("cache reached");
       rethrow;
     }
   }

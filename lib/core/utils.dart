@@ -12,7 +12,7 @@ String? validateEmail(String value) {
 
 String? validatePassword(String value) {
   if (value.isEmpty) {
-    return 'Please enter Password';
+    return 'Please enter password';
   } else {
     if (value.length < 5) {
       return 'Enter at least 5 chars';

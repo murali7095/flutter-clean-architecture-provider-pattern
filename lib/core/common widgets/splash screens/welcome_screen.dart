@@ -22,9 +22,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 fit: BoxFit.fitHeight),
           ),
           const GreetingWidget(),
-          // Align(child: Text("shop",style: TextStyle(color: Colors.red),),),
-
-          //Align(child: Text("shop"),)
         ],
       ),
     );

@@ -10,7 +10,6 @@ class ProductProvider extends ChangeNotifier {
   void getProducts() async {
     isLoading = true;
     products = (await source.getTheAllProducts());
-    debugPrint('product ${products?.elementAt(1).title}');
     isLoading = false;
     notifyListeners();
   }

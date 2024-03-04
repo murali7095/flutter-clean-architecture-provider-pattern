@@ -27,23 +27,18 @@ class SignInDataSourceImpl implements SignInDataSource {
         "returnSecureToken": signInModel.returnSecureToken
       };
       final payload = json.encode(data);
-      debugPrint("signUpModel.email: ${signInModel.email}");
       final response = await NetworkApiServices()
           .postApiResponse(BaseUrls.signBaseUrl, payload);
-      debugPrint("response body: ${response.body}");
       var result = responseHandler(response);
       return result.fold((l) {
-        debugPrint("left reached ${jsonDecode(response.body)}");
         return Left(CustomException(
           displayErrorMessage: response.body,
         ));
       }, (r) async {
-        debugPrint("right reached");
 
         return Right(r);
       });
     } catch (e) {
-      debugPrint("cache reached");
       rethrow;
     }
   }

@@ -4,10 +4,10 @@ import 'package:m_mart_shopping/core/utils.dart';
 import 'package:m_mart_shopping/features/auth/signIn/presentation/controller/sign_in_controller.dart';
 import 'package:m_mart_shopping/features/auth/signUp/presentation/controller/sign_up_controller.dart';
 import 'package:m_mart_shopping/features/auth/signUp/presentation/screens/sign_up_user_main.dart';
-import 'package:m_mart_shopping/features/home%20page/home_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/common widgets/text_form_field_custom_widget.dart';
+import '../../../../home page/presentation/home_page_main.dart';
 import '../../data/model/sign_in_model.dart';
 
 ///SignInUserMain widget responsible for allowing the user to enter their credentials and do validation
@@ -145,7 +145,7 @@ class _SignInUserMainState extends State<SignInUserMain>
                                           "Sign Up",
                                           style: TextStyle(
                                               color: Colors.blue.shade800),
-                                        ))
+                                        )),
                                   ],
                                 ))
                           ],
@@ -161,16 +161,14 @@ class _SignInUserMainState extends State<SignInUserMain>
 
   ///onSubmit to do validation
   void onSubmit() async {
-    debugPrint("emailErrorMessage : $emailErrorMessage");
-    debugPrint("passwordErrorMessage : $passwordErrorMessage");
     if (_formKey.currentState!.validate()) {
       if (emailErrorMessage == null && passwordErrorMessage == null) {
         var provider = Provider.of<SignInController>(context, listen: false);
         await provider.signInUserController(signInModel, context);
-        debugPrint('entered inside second if');
+
         if (provider.isBack) {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomePage()));
+              MaterialPageRoute(builder: (context) => const HomePageMain()));
         }
       }
     }
@@ -211,7 +209,6 @@ class _SignInUserMainState extends State<SignInUserMain>
               onChanged: (value) {
                 signInModel.email = value;
                 emailController.text = value;
-                debugPrint(' signInRequestModel.email : ${signInModel.email}');
               },
               validate: (value) {
                 setState(() {
@@ -229,8 +226,6 @@ class _SignInUserMainState extends State<SignInUserMain>
               onChanged: (value) {
                 signInModel.password = value;
                 passwordController.text = value;
-                debugPrint(
-                    ' signInRequestModel.email : ${signInModel.password}');
               },
               validate: (value) {
                 setState(() {

@@ -14,6 +14,7 @@ class SignInController with ChangeNotifier {
   Future<void> signInUserController(
       SignInModel signInModel, BuildContext contextMain) async {
     isLoading = true;
+    isBack = false;
     notifyListeners();
     final data = await SignInUser(SignInRepositoryImplementation())
         .loginTheUser(signInModel: signInModel);
@@ -27,7 +28,7 @@ class SignInController with ChangeNotifier {
       }
       _showErrorDialog(errorMessage, contextMain);
     }, (r) {
-      debugPrint('final data : ${r.idToken}');
+      isBack = true;
     });
     isLoading = false;
     notifyListeners();
@@ -37,7 +38,7 @@ class SignInController with ChangeNotifier {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('An Error Occurred'),
+        title: const Text('Alert!'),
         content: Text(
           errorMessage,
           style: const TextStyle(color: Colors.red, fontSize: 12),

@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.shop_rounded,
                         size: 50,
                         semanticLabel: 'Shop Now',
@@ -71,14 +71,14 @@ class _HomePageState extends State<HomePage> {
                     ),
                     IconButton(
                         onPressed: () {},
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.movie_creation_outlined,
                           size: 50,
                         ))
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Expanded(

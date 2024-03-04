@@ -1,7 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:m_mart_shopping/features/auth/signIn/presentation/screens/sign_in_user_main.dart';
 import 'package:m_mart_shopping/features/home%20page/presentation/Phones.dart';
 import 'package:m_mart_shopping/features/home%20page/presentation/laptops.dart';
+import 'package:m_mart_shopping/main.dart';
 
 class HomePageMain extends StatefulWidget {
   const HomePageMain({super.key});
@@ -25,21 +29,29 @@ class _HomePageMainState extends State<HomePageMain> {
       ),
       appBar: AppBar(
         title: const Text("𝙈𝙈𝙖𝙧𝙩"),
-        actions: const [
-          Icon(Icons.search),
-          SizedBox(
-            width: 18,
-          ),
-          Badge(
+        actions: [
+          const Badge(
             label: Text("3"),
             child: Icon(Icons.notifications),
           ),
-          SizedBox(
+          const SizedBox(
             width: 18,
           ),
-          Icon(Icons.shopping_cart),
-          SizedBox(
-            width: 4,
+          const Icon(Icons.shopping_cart),
+          const SizedBox(
+            width: 16,
+          ),
+          GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignInUserMain(),
+                    ));
+              },
+              child: const Icon(Icons.exit_to_app_rounded)),
+          const SizedBox(
+            width: 5,
           ),
         ],
       ),
@@ -65,7 +77,7 @@ class _HomePageMainState extends State<HomePageMain> {
                 );
               }).toList(),
             ),
-            const SizedBox(
+            /* const SizedBox(
               height: 10,
             ),
             Row(
@@ -81,7 +93,7 @@ class _HomePageMainState extends State<HomePageMain> {
                     const LaptopsWidget()),
                 // categoryItemsWidget("assets/images/phone.png","Laptops",const LaptopsWidget()),
               ],
-            )
+            )*/
           ],
         ),
       ),

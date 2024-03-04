@@ -18,20 +18,16 @@ class ProductDataSourceImpl implements ProductDataSource {
     try {
       final response =
           await NetworkApiServices().getApiResponse(BaseUrls.productsBaseUrl);
-      debugPrint("product response body: ${response.body}");
+
       var result = responseHandler(response);
       return result.fold((l) {
-        debugPrint("product left reached ${jsonDecode(response.body)}");
         return Left(CustomException(
           displayErrorMessage: response.body,
         ));
       }, (r) async {
-        debugPrint("product right reached");
-
         return Right(r);
       });
     } catch (e) {
-      debugPrint("product cache reached");
       rethrow;
     }
   }

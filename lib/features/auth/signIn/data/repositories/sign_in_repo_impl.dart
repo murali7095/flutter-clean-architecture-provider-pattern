@@ -19,10 +19,9 @@ class SignInRepositoryImplementation implements SignInRepository {
         await NetworkInfoImpl(DataConnectionChecker()).isConnected;
     try {
       if (hasInternetConnection) {
-        debugPrint("the isConnected: $hasInternetConnection");
         final response =
             await SignInDataSourceImpl().loginTheUser(signInModel: signInModel);
-        debugPrint("the SignUpDataSourceImpl: $response");
+
         return response.fold((l) {
           return Left(
               CustomException(displayErrorMessage: l.displayErrorMessage));
@@ -34,7 +33,6 @@ class SignInRepositoryImplementation implements SignInRepository {
         return Left(NoInternetException(displayErrorMessage: 'No Internet'));
       }
     } catch (e) {
-      debugPrint("cache reached");
       rethrow;
     }
   }

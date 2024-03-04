@@ -10,6 +10,7 @@ import 'package:m_mart_shopping/features/home%20page/home_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/utils.dart';
+import '../../../../home page/presentation/home_page_main.dart';
 
 ///SignUpUserMain widget is responsible for allowing the user to enter details and do validations
 ///The User will be navigated to home screen after the successful registration
@@ -167,8 +168,6 @@ class _SignUpUserMainState extends State<SignUpUserMain>
 
   ///onSubmit to do validation
   void onSubmit() async {
-    debugPrint("emailErrorMessage : $emailErrorMessage");
-    debugPrint("passwordErrorMessage : $passwordErrorMessage");
     if (_formKey.currentState!.validate()) {
       if (emailErrorMessage == null &&
           passwordErrorMessage == null &&
@@ -176,10 +175,10 @@ class _SignUpUserMainState extends State<SignUpUserMain>
           phoneNumberErrorMessage == null) {
         var provider = Provider.of<SignUpController>(context, listen: false);
         await provider.signUpUserController(signUpModel, context);
-        debugPrint('entered inside second if');
+
         if (provider.isBack) {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomePage()));
+              MaterialPageRoute(builder: (context) => const HomePageMain()));
         }
       }
     }
@@ -242,7 +241,6 @@ class _SignUpUserMainState extends State<SignUpUserMain>
               onChanged: (value) {
                 signUpModel.email = value;
                 emailController.text = value;
-                debugPrint(' signInRequestModel.email : ${signUpModel.email}');
               },
               validate: (value) {
                 setState(() {
@@ -260,8 +258,6 @@ class _SignUpUserMainState extends State<SignUpUserMain>
               onChanged: (value) {
                 signUpModel.password = value;
                 passwordController.text = value;
-                debugPrint(
-                    ' signInRequestModel.email : ${signUpModel.password}');
               },
               validate: (value) {
                 setState(() {

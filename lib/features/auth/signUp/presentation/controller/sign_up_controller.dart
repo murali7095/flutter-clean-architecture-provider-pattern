@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:m_mart_shopping/features/auth/signUp/business/usecases/sign_up_usecase.dart';
 import 'package:m_mart_shopping/features/auth/signUp/data/model/sign_up_model.dart';
@@ -13,6 +14,7 @@ class SignUpController with ChangeNotifier {
   Future<void> signUpUserController(
       SignUpModel signUpModel, BuildContext contextMain) async {
     isLoading = true;
+    isBack = false;
     notifyListeners();
     final data = await SignUpUser(SignUpRepositoryImplementation())
         .registerTheUser(signUpModel: signUpModel);
@@ -27,9 +29,16 @@ class SignUpController with ChangeNotifier {
             'We have blocked all requests from this device due to unusual activity. Try again later';
       }
       _showErrorDialog(errorMessage, contextMain);
-    }, (r) {
-      debugPrint('final data : ${r.idToken}');
+    }, (r) async {
+      DatabaseReference ref =
+          FirebaseDatabase.instance.ref("users/${r.localId}");
+      await ref.set({
+        "name": signUpModel.username,
+        "id": r.localId,
+        "phone": signUpModel.phoneNumber
+      });
     });
+    isBack = true;
     isLoading = false;
     notifyListeners();
   }
